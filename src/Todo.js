@@ -1,36 +1,52 @@
 import React from "react";
-import ListItemText from "@mui/material/ListItemIcon";
 import ListItem from "@mui/material/ListItem";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import {ListItemSecondaryAction} from "@mui/material";
+import { ListItemSecondaryAction, Typography } from "@mui/material";
 import useToggleState from "./hooks/useToggleState";
 import EditTodoForm from "./EditTodoForm";
 
-function Todo({id, task, completed, removeTodo, toggleTodo, editTodo}) {
+function Todo({ id, task, completed, removeTodo, toggleTodo, editTodo }) {
     const [isEditing, toggle] = useToggleState();
     return (
-        <ListItem style={{height: isEditing ? "auto" : "66px", padding: "1rem"}}>
-            {isEditing ?
-                <EditTodoForm editTodo={editTodo} id={id} task={task} toggleEditForm={toggle}/>
-                :
+        <ListItem style={{ height: "fit-content", padding: "1rem", display: 'flex', alignItems: 'center' }}>
+            {isEditing ? (
+                <EditTodoForm editTodo={editTodo} id={id} task={task} toggleEditForm={toggle} />
+            ) : (
                 <>
-                    <Checkbox disableRipple disableTouchRipple tabIndex={-1} style={{padding:"0 0.5rem 0 0"}} checked={completed} onClick={() => toggleTodo(id)}/>
-                    <ListItemText style={{textDecoration: completed ? "line-through" : "none"}}>{task}</ListItemText>
+                    <Checkbox
+                        disableRipple
+                        disableTouchRipple
+                        tabIndex={-1}
+                        style={{ padding: "0 0.5rem 0 0" }}
+                        checked={completed}
+                        onClick={() => toggleTodo(id)}
+                    />
+                    <Typography
+                        style={{
+                            textDecoration: completed ? "line-through" : "none",
+                            flex: 1,
+                            wordWrap: 'break-word',
+                            width: '100%',
+                            paddingRight:"100px"
+                        }}
+                    >
+                        {task}
+                    </Typography>
                     <ListItemSecondaryAction>
                         <IconButton aria-label="Delete" onClick={() => removeTodo(id)}>
-                            <DeleteIcon/>
+                            <DeleteIcon />
                         </IconButton>
                         <IconButton aria-label="Edit" onClick={toggle}>
-                            <EditIcon/>
+                            <EditIcon />
                         </IconButton>
                     </ListItemSecondaryAction>
                 </>
-            }
+            )}
         </ListItem>
-    )
+    );
 }
 
 export default Todo;

@@ -20,7 +20,7 @@ function EditTodoForm({editTodo, id, task, toggleEditForm}) {
         <form
             onSubmit={(e) => {
                 e.preventDefault()
-                if(handleError())  return;
+                if (handleError()) return;
                 editTodo(id, value);
                 toggleEditForm();
                 reset();

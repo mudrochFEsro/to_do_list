@@ -8,52 +8,54 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Footer from './Footer';
 
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#444444', // Nastaviť primárnu farbu na oranžovú
+            main: '#444444',
         },
     },
 });
 function TodoApp() {
-
-
-    const initialTodos = []
-    const {todos, addTodo, removeTodo, editTodo, toggleTodo} = useTodoState(initialTodos)
+    const initialTodos = [];
+    const { todos, addTodo, removeTodo, editTodo, toggleTodo } = useTodoState(initialTodos);
 
     useEffect(() => {
-        window.localStorage.setItem("todos", JSON.stringify(todos))
-    }, [todos])
-
+        window.localStorage.setItem("todos", JSON.stringify(todos));
+    }, [todos]);
 
     return (
         <ThemeProvider theme={theme}>
-        <Paper style={{
-            padding: "0",
-            margin: "0",
-            height: "100vh",
-            background: "#e7e7e7",
-        }} elevation={0}>
-            <AppBar color='primary' position='static' style={{height: "fit-content"}}>
-                <Toolbar>
-                    <Typography color="inherit">Todos</Typography>
-                </Toolbar>
-            </AppBar>
-            <Grid container justifyContent="center">
-                <Grid item xs={11} md={8} lg={4}>
-                    <TodoForm addTodo={addTodo}/>
-                    <TodoList
-                        todos={todos}
-                        removeTodo={removeTodo}
-                        toggleTodo={toggleTodo}
-                        editTodo={editTodo}
-                    />
+            <Paper style={{
+                padding: "0",
+                margin: "0",
+                height: "100vh",
+                background: "#e7e7e7",
+                display: 'flex',
+                flexDirection: 'column',
+            }} elevation={0}>
+                <AppBar color='primary' position='static' style={{ height: "fit-content" }}>
+                    <Toolbar>
+                        <Typography color="inherit">Todos</Typography>
+                    </Toolbar>
+                </AppBar>
+                <Grid container justifyContent="center" style={{ flexGrow: 1 }}>
+                    <Grid item xs={11} md={8} lg={4}>
+                        <TodoForm addTodo={addTodo} />
+                        <TodoList
+                            todos={todos}
+                            removeTodo={removeTodo}
+                            toggleTodo={toggleTodo}
+                            editTodo={editTodo}
+                        />
+                    </Grid>
+                    <Footer />
                 </Grid>
-            </Grid>
-        </Paper>
+
+            </Paper>
         </ThemeProvider>
-    )
+    );
 }
 
 export default TodoApp;
